@@ -11,6 +11,12 @@ public class PopUp {
     private JTextArea $text;
     private JButton $close;
 
+    /**
+     * Constructor with parameter.
+     * @param text the text that will be shown in the popup window
+     * @pre the text is not empty
+     * @post the popup window is created and shown
+     */
     public PopUp(String text) {
         this.$text = new JTextArea(text);
         this.$close = new JButton("Close");
