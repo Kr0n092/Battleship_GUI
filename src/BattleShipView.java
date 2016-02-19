@@ -92,6 +92,9 @@ public class BattleShipView extends AbstractView {
 
                     if (((BattleShipController)getController()).checkSunk(clickedRow, clickedCol)) {
                         createPopUp("You sunk my " + ((BattleShipController)getController()).getType(clickedRow, clickedCol) + "!");
+                        if (((BattleShipController)getController()).getShipsLeft() == 0) {
+                            won();
+                        }
                     }
                 } else if (!hit) {
                     clickedBox.setBackground(Color.GRAY);
@@ -104,13 +107,22 @@ public class BattleShipView extends AbstractView {
     }
 
     /**
+     * Triggered when the user has blasted all the ships into oblivion!
+     * Disables all the cells and creates the victory screen.
+     */
+    private void won() {
+        disableCells();
+        createPopUp("Congratulations!\n You've sunk every ship and\n saved the world from\n certain doom!");
+    }
+
+    /**
      * Triggers when the user has lost the game. Shows the location of the ships, disables all the cells and creates
      * the appropriate pop-up window
      */
     private void lost() {
         showShip();
         disableCells();
-        createPopUp("You didn't find all my ships, I win");
+        createPopUp("You didn't find all my ships,\n I win!!!");
     }
 
     /**
@@ -222,6 +234,7 @@ public class BattleShipView extends AbstractView {
         $info.removeAll();
         $info.add(new JTextField("Number of turns left: " + turnsLeft));
         $frame.revalidate();
+
         if (turnsLeft == 0) {
             lost();
         }

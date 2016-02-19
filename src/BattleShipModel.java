@@ -19,7 +19,7 @@ public class BattleShipModel extends Observable {
     public BattleShipModel() {
         this.$grid = new boolean[10][10]; //all cells have a default value of false
         this.$numberOfTurns = 1;
-        this.$maxTurns = 100;
+        this.$maxTurns = 50;
         this.$ships = new ArrayList<>(5);
         createShips();
     }
@@ -185,7 +185,7 @@ public class BattleShipModel extends Observable {
     public String getType(int row, int col) {
         Ship ship = searchShip(row, col);
         String type = ship.getType();
-        $ships.remove(ship);
+        removeShip(ship);
         return type;
     }
 
@@ -197,12 +197,23 @@ public class BattleShipModel extends Observable {
      */
     public boolean checkSunk(int row, int col) {
         Ship shipToCheck = searchShip(row,col);
+
         if (shipToCheck != null) {
-            return (shipToCheck.checkSunk());
+            return shipToCheck.checkSunk();
         }
         return false;
     }
 
+    /**
+     * Removes a ship from the list of ships.
+     *
+     * @param toBeRemoved the ship to be removed
+     * @pre the ship that will be removed exists in the list of ships
+     * @post the ship is removed from the list of ships
+     */
+    private void removeShip(Ship toBeRemoved) {
+        this.$ships.remove(toBeRemoved);
+    }
     /**
      * Sets a hit on a ship.
      * @param row the row where the ship is situated
@@ -387,7 +398,6 @@ public class BattleShipModel extends Observable {
      */
     public void increaseTurn() {
         $numberOfTurns++;
-
         BattleShipUpdate info = new BattleShipUpdate($maxTurns-$numberOfTurns + 1);
         setChanged();
         notifyObservers(info);

@@ -6,12 +6,12 @@ public class BattleShipUpdate {
 
     /**
      * Constructor with parameters.
-     * @param left the amount of turns a user has left
-     * @pre the parameter is an integer, at least 0
-     * @post the member variable is set with the value of the parameter
+     * @param turns the amount of turns a user has left
+     * @pre the parameters are integers, both at least 0
+     * @post the member variables are set with the value of the parameters
      */
-    public BattleShipUpdate(int left) {
-        this.$turnsLeft = left;
+    public BattleShipUpdate(int turns) {
+        this.$turnsLeft = turns;
     }
 
     /**
@@ -19,4 +19,5 @@ public class BattleShipUpdate {
      * @return the number of turns left
      */
     public int getTurnsLeft() { return this.$turnsLeft; }
+
 }
