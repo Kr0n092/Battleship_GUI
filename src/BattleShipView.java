@@ -1,6 +1,7 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class BattleShipView extends AbstractView {
     private JPanel $grid;
     private JFrame $frame;
     private JPanel $info;
+    private JButton $restart;
     private ArrayList<ArrayList<Panel>> $panelList;
 
     /**
@@ -36,6 +38,7 @@ public class BattleShipView extends AbstractView {
     private void init() {
         createGrid();
         createInformationPanel();
+        createRestartButton();
         createFrame();
         addElements();
     }
@@ -181,6 +184,16 @@ public class BattleShipView extends AbstractView {
 
     }
 
+    private void createRestartButton() {
+        this.$restart = new JButton("Restart");
+        this.$restart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                $frame.dispose();
+                new Battleship();
+            }
+        });
+    }
     /**
      * Creates the frame on which all elements will be added.
      */
@@ -198,7 +211,9 @@ public class BattleShipView extends AbstractView {
      */
     private void addElements() {
         $frame.add($grid, BorderLayout.CENTER);
+        $info.add($restart,BorderLayout.EAST);
         $frame.add($info, BorderLayout.SOUTH);
+
     }
 
     /**
@@ -233,6 +248,7 @@ public class BattleShipView extends AbstractView {
         int turnsLeft = info.getTurnsLeft();
         $info.removeAll();
         $info.add(new JTextField("Number of turns left: " + turnsLeft));
+        $info.add($restart,BorderLayout.EAST);
         $frame.revalidate();
 
         if (turnsLeft == 0) {
